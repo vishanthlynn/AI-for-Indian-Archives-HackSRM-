@@ -41,13 +41,23 @@ with st.sidebar:
     st.header("Configuration")
     
     # Priority: Streamlit Secrets (Cloud) > .env (Local)
-    if "OPENAI_API_KEY" in st.secrets:
-        st.success("Cloud API Key Loaded ✅")
-        os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-    elif os.getenv("OPENAI_API_KEY"):
-         st.success("Local .env Key Loaded ✅")
-    else:
-         st.error("Missing API Key! Please set OPENAI_API_KEY in .env or Secrets.")
+    api_key_loaded = False
+    
+    try:
+        # Accessing st.secrets triggers a file check. If missing, it raises StreamlitSecretNotFoundError.
+        if "OPENAI_API_KEY" in st.secrets:
+            st.success("Cloud API Key Loaded ✅")
+            os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+            api_key_loaded = True
+    except Exception:
+        # Secrets file missing (Local dev) - ignore and check .env
+        pass
+        
+    if not api_key_loaded:
+        if os.getenv("OPENAI_API_KEY"):
+             st.success("Local .env Key Loaded ✅")
+        else:
+             st.error("Missing API Key! Please set OPENAI_API_KEY in .env or Secrets.")
         
     ocr_mode = st.selectbox("OCR Engine", ["Doctr (Deep Learning)", "Tesseract (Fallback)"])
     indic_support = st.checkbox("Enable Indic Script Fallback", value=True)
