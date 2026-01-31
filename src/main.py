@@ -9,6 +9,11 @@ from ocr.engine import HeritageOCREngine
 from agent.agent import HeritageAgent
 from ledger.ledger import BlockchainLedger
 
+from dotenv import load_dotenv
+
+# Load env variables immediately
+load_dotenv()
+
 # Page Config
 st.set_page_config(layout="wide", page_title="Heritage OCR & AI Agent")
 
@@ -34,20 +39,15 @@ st.markdown("Digitize, Restore, and Converse with 100-year-old Land Records and 
 # --- Sidebar ---
 with st.sidebar:
     st.header("Configuration")
-    st.header("Configuration")
     
-    # Check if API Key is in Secrets (Cloud Deployment) or Sidebar (Local/Manual)
-    try:
-        if "OPENAI_API_KEY" in st.secrets:
-            st.success("API Key loaded from Cloud Secrets ✅")
-            os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-        else:
-            raise KeyError("Key not found") # Trigger manual input
-    except (FileNotFoundError, KeyError, Exception):
-        # Fallback for local dev or if secrets not set
-        api_key = st.text_input("OpenAI API Key", type="password", help="Needed for the AI Agent")
-        if api_key:
-            os.environ["OPENAI_API_KEY"] = api_key
+    # Priority: Streamlit Secrets (Cloud) > .env (Local)
+    if "OPENAI_API_KEY" in st.secrets:
+        st.success("Cloud API Key Loaded ✅")
+        os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+    elif os.getenv("OPENAI_API_KEY"):
+         st.success("Local .env Key Loaded ✅")
+    else:
+         st.error("Missing API Key! Please set OPENAI_API_KEY in .env or Secrets.")
         
     ocr_mode = st.selectbox("OCR Engine", ["Doctr (Deep Learning)", "Tesseract (Fallback)"])
     indic_support = st.checkbox("Enable Indic Script Fallback", value=True)
