@@ -34,9 +34,16 @@ st.markdown("Digitize, Restore, and Converse with 100-year-old Land Records and 
 # --- Sidebar ---
 with st.sidebar:
     st.header("Configuration")
-    api_key = st.text_input("OpenAI API Key", type="password", help="Needed for the AI Agent")
-    if api_key:
-        os.environ["OPENAI_API_KEY"] = api_key
+    st.header("Configuration")
+    
+    # Check if API Key is in Secrets (Cloud Deployment) or Sidebar (Local/Manual)
+    if "OPENAI_API_KEY" in st.secrets:
+        st.success("API Key loaded from Cloud Secrets ✅")
+        os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+    else:
+        api_key = st.text_input("OpenAI API Key", type="password", help="Needed for the AI Agent")
+        if api_key:
+            os.environ["OPENAI_API_KEY"] = api_key
         
     ocr_mode = st.selectbox("OCR Engine", ["Doctr (Deep Learning)", "Tesseract (Fallback)"])
     indic_support = st.checkbox("Enable Indic Script Fallback", value=True)
