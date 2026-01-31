@@ -36,6 +36,16 @@ st.markdown("""
 st.title("📜 Heritage OCR: AI for Indian Archives")
 st.markdown("Digitize, Restore, and Converse with 100-year-old Land Records and Manuscripts.")
 
+# --- Heritage Mode Badge (Always Visible) ---
+st.markdown("""
+<div style="background-color: #f4e4bc; color: #5c4033; padding: 10px; border-radius: 5px; margin: 20px 0; border: 1px solid #8b4513;">
+    <strong>🟤 Heritage Mode Enabled</strong> &nbsp; <span style="font-size: 0.8em; color: green">● Active</span><br>
+    <span style="font-size: 0.9em;">
+    ✔ Non-standard fonts &nbsp; ✔ Degraded scans &nbsp; ✔ Indic script fallback
+    </span>
+</div>
+""", unsafe_allow_html=True)
+
 # --- Sidebar ---
 with st.sidebar:
     st.header("Configuration")
