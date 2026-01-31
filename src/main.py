@@ -145,9 +145,21 @@ if uploaded_file:
             ledger_info = st.session_state.processed_data.get('ledger')
             if ledger_info:
                 st.success(f"✅ **Blockchain Verified** | Hash: `{ledger_info['hash'][:15]}...` | Index: #{ledger_info['index']}")
+                st.caption("🔁 **Versioned Record (v1 → v2)**: Corrections are appended, never overwritten.")
+                
                 with st.expander("⛓️ View Audit Trail"):
                     st.json(ledger_info)
                     st.info("ℹ️ This hash proves the document existed in this state at this time.")
+
+            # --- Heritage Mode Badge ---
+            st.markdown("""
+            <div style="background-color: #f4e4bc; color: #5c4033; padding: 10px; border-radius: 5px; margin-bottom: 10px; border: 1px solid #8b4513;">
+                <strong>🟤 Heritage Mode Enabled</strong><br>
+                <span style="font-size: 0.9em;">
+                ✔ Non-standard fonts &nbsp; ✔ Degraded scans &nbsp; ✔ Indic script fallback
+                </span>
+            </div>
+            """, unsafe_allow_html=True)
 
             tabs = st.tabs(["Extracted Text", "Structured Data", "Translation"])
             
