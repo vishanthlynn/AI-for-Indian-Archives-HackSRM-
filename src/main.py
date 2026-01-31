@@ -37,10 +37,14 @@ with st.sidebar:
     st.header("Configuration")
     
     # Check if API Key is in Secrets (Cloud Deployment) or Sidebar (Local/Manual)
-    if "OPENAI_API_KEY" in st.secrets:
-        st.success("API Key loaded from Cloud Secrets ✅")
-        os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
-    else:
+    try:
+        if "OPENAI_API_KEY" in st.secrets:
+            st.success("API Key loaded from Cloud Secrets ✅")
+            os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+        else:
+            raise KeyError("Key not found") # Trigger manual input
+    except (FileNotFoundError, KeyError, Exception):
+        # Fallback for local dev or if secrets not set
         api_key = st.text_input("OpenAI API Key", type="password", help="Needed for the AI Agent")
         if api_key:
             os.environ["OPENAI_API_KEY"] = api_key
