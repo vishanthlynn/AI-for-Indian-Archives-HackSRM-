@@ -1,5 +1,7 @@
 # Heritage OCR - Vibecraft Hackathon
 
+**#VibeCraft #HackSRM #infinitus2026 #SRMUAP**
+
 A specialized AI system for digitizing, restoring, and querying heritage documents (Land records, manuscripts) with a focus on Indic scripts and vernacular languages.
 
 ## 🌟 Features
