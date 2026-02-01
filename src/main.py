@@ -67,7 +67,7 @@ with st.sidebar:
     
     st.divider()
     st.markdown("### About")
-    st.info("Built for Vibecraft Hackathon using Doctr & OpenAI.\n\nTeam: Vishanth Dandu, Justin Joshua, Bhargav Gutta, Nikhil Rajendra")
+    st.info("Built for Vibecraft Hackathon using Doctr & OpenAI.\n\nTeam: Vishanth Dandu, Justin Joshua, Bhargav Gutta, Nikhil Rajendra\n\n#VibeCraft #HackSRM #infinitus2026 #SRMUAP")
 
 # --- Initialization ---
 
