@@ -3,6 +3,7 @@ torch
 torchvision
 python-doctr
 opencv-python-headless
+shapely>=2.0.0
 numpy<2.0.0
 streamlit
 pillow
